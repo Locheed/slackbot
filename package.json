@@ -1,0 +1,21 @@
+{
+    "name": "redlandbot",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "start": "nodemon ./bin/www"
+    },
+    "dependencies": {
+        "axios": "^0.21.1",
+        "cookie-parser": "~1.4.4",
+        "debug": "~2.6.9",
+        "dotenv": "^8.2.0",
+        "express": "~4.16.1",
+        "luxon": "^1.26.0",
+        "morgan": "~1.9.1",
+        "node-schedule": "^2.0.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.7"
+    }
+}
