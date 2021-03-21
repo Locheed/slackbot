@@ -1,14 +1,23 @@
-const schedule = require('node-schedule');
+import schedule from 'node-schedule';
 
-const runNameDayMethod = require('./scheduleNameDay');
-const {
+import runNameDayMethod from './scheduleNameDay';
+import {
   getFlagDaysByDate,
   getChangingFlagDaysByDate,
   getEmojiByDate,
   getSlackUsers,
-} = require('./airtable');
+} from './airtable';
+
+import { INames } from './interfaces/INames';
+
 // Posting functionality
-const postTodayToSlack = require('./postToSlack');
+import postTodayToSlack from './postToSlack';
+
+interface IPostToSlack {
+   todaysOfficialNames: Array<INames>
+    todaysOrthodoxNames: Array<INames>
+    todaysSwedishNames: Array<INames>
+}
 
 const startSchedulers = () => {
   // Scheduler
@@ -32,4 +41,4 @@ const startSchedulers = () => {
   );
 };
 
-module.exports = startSchedulers;
+export default startSchedulers;

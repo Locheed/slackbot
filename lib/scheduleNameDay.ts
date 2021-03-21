@@ -1,36 +1,39 @@
 const fs = require('fs');
 const path = require('path');
 
+import { INames } from './interfaces/INames'
+
 // Load raw json content
-const rawOfficialNames = fs.readFileSync(
+const rawOfficialNames: string = fs.readFileSync(
   path.resolve(__dirname, '../data/names_official.json')
 );
-const rawOrthodoxNames = fs.readFileSync(
+const rawOrthodoxNames: string = fs.readFileSync(
   path.resolve(__dirname, '../data/names_orthodox.json')
 );
-const rawSwedishNames = fs.readFileSync(
+const rawSwedishNames: string = fs.readFileSync(
   path.resolve(__dirname, '../data/names_swedish.json')
 );
 
+
 // Parse the raw json
-const officialNames = JSON.parse(rawOfficialNames);
-const orthodoxNames = JSON.parse(rawOrthodoxNames);
-const swedishNames = JSON.parse(rawSwedishNames);
+const officialNames: Array<INames> = JSON.parse(rawOfficialNames);
+const orthodoxNames: Array<INames> = JSON.parse(rawOrthodoxNames);
+const swedishNames: Array<INames> = JSON.parse(rawSwedishNames);
 
 /* eslint-disable */
 // Loop the official namedays json and filter current day
-const loopNamesAndFilter = (currentDateNumber, currentMonth, namelist) => {
+const loopNamesAndFilter = (currentDateNumber: number, currentMonth: number, namelist: Array<INames>) => {
   return namelist.filter((date) => {
     return (
-      parseInt(date.month) === currentMonth &&
-      parseInt(date.day) === currentDateNumber
+      parseInt(date.month, 10) === currentMonth &&
+      parseInt(date.day, 10) === currentDateNumber
     );
   });
 };
 /* eslint-enable */
 
-// Construct the nameday data and run postNameDaysToSlack
-const runNameDayMethod = async () => {
+// Construct the nameday data
+const runNameDayMethod = async (): Promise<object> => {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1;
   const currentDateNumber = currentDate.getDate();
@@ -53,11 +56,13 @@ const runNameDayMethod = async () => {
     swedishNames
   );
 
-  return {
+  const currentNameDays = {
     todaysOfficialNames: todaysOfficialNames[0].official_names,
     todaysOrthodoxNames: todaysOrthodoxNames[0].orthodox_names,
     todaysSwedishNames: todaysSwedishNames[0].swedish_names,
-  };
+  }
+
+  return currentNameDays;
 };
 
-module.exports = runNameDayMethod;
+export default runNameDayMethod;

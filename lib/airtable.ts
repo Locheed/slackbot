@@ -1,5 +1,5 @@
-const Airtable = require('airtable');
-const { DateTime } = require('luxon');
+import Airtable  from 'airtable';
+import { DateTime } from 'luxon';
 
 // Get the current date by local timezone
 const currentDate = DateTime.now().setLocale('fi');
@@ -8,12 +8,7 @@ const dayNumber = currentDate.day;
 const monthNumber = currentDate.month;
 const yearNumber = currentDate.year;
 
-Airtable.configure({
-  endpointUrl: 'https://api.airtable.com',
-  apiKey: process.env.AIRTABLE_API_KEY,
-});
-
-const base = Airtable.base(process.env.AIRTABLE_BASE);
+const base = new Airtable({ apiKey: process.env.AIRTABLE_API_KEY}).base(<string>process.env.AIRTABLE_BASE);
 
 const tableFlagDays = base('Flag days');
 const tableChangingFlagDays = base('Flag days changing');
@@ -31,6 +26,7 @@ const getFlagDaysByDate = async () => {
     return records;
   } catch (err) {
     console.log(err);
+    return '';
   }
 };
 
@@ -45,6 +41,7 @@ const getChangingFlagDaysByDate = async () => {
     return records;
   } catch (err) {
     console.log(err);
+    return '';
   }
 };
 
@@ -59,6 +56,7 @@ const getEmojiByDate = async () => {
     return records;
   } catch (err) {
     console.log(err);
+    return '';
   }
 };
 
@@ -73,10 +71,11 @@ const getSlackUsers = async () => {
     return { records: records.map((record) => record.fields) };
   } catch (err) {
     console.log(err);
+    return '';
   }
 };
 
-module.exports = {
+export  {
   getFlagDaysByDate,
   getChangingFlagDaysByDate,
   getEmojiByDate,
