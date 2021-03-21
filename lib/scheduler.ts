@@ -13,12 +13,6 @@ import { INames } from './interfaces/INames';
 // Posting functionality
 import postTodayToSlack from './postToSlack';
 
-interface IPostToSlack {
-   todaysOfficialNames: Array<INames>
-    todaysOrthodoxNames: Array<INames>
-    todaysSwedishNames: Array<INames>
-}
-
 const startSchedulers = () => {
   // Scheduler
   const runMorningSchedule = schedule.scheduleJob(
@@ -29,6 +23,7 @@ const startSchedulers = () => {
       const currentChangingFlagDay = await getChangingFlagDaysByDate();
       const currentDayEmoji = await getEmojiByDate();
       const slackUsers = await getSlackUsers();
+      console.log("🚀 ~ file: scheduler.ts ~ line 35 ~ slackUsers", slackUsers)
 
       postTodayToSlack(
         currentNames,

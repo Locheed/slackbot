@@ -34,6 +34,7 @@ interface IPostToSlack {
     todaysOrthodoxNames: Array<INames>
     todaysSwedishNames: Array<INames>
 }
+
 const postTodayToSlack = (
   {
     todaysOfficialNames,

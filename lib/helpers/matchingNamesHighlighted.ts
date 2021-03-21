@@ -1,14 +1,16 @@
-const matchingNamesHighlighted = (todaysNames, slackUsers) => {
-  // List of usernames from Airtable
-  const realNames = slackUsers.records.map((user) => user.realName);
+import { INames } from '../interfaces/INames';
 
-  const highlighted = [];
+const matchingNamesHighlighted = (todaysNames: INames[], slackUsers:object[]) => {
+  // List of usernames from Airtable
+  const realNames = slackUsers.map((user: any) => user.realName);
+
+  const highlighted: string[] = [];
   // Loop all namedays and if there is a match with usernames from Airtable highlight name
-  todaysNames.forEach((nameDay, i) => {
+  todaysNames.forEach((nameDay: INames, i: number) => {
     if (realNames.includes(nameDay)) {
       highlighted[i] = `*${nameDay}*`;
     } else {
-      highlighted[i] = nameDay;
+      highlighted[i] = nameDay.toString();
     }
   });
 

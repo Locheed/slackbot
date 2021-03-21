@@ -32,8 +32,9 @@ const loopNamesAndFilter = (currentDateNumber: number, currentMonth: number, nam
 };
 /* eslint-enable */
 
+
 // Construct the nameday data
-const runNameDayMethod = async (): Promise<object> => {
+const runNameDayMethod = async (): Promise<any> => {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1;
   const currentDateNumber = currentDate.getDate();

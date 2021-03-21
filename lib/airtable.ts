@@ -68,7 +68,7 @@ const getSlackUsers = async () => {
       })
       .firstPage();
 
-    return { records: records.map((record) => record.fields) };
+    return records.map((record): Array<object> => record.fields) ;
   } catch (err) {
     console.log(err);
     return '';
