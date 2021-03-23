@@ -1,15 +1,15 @@
-const { DateTime } = require('luxon');
+import { DateTime } from 'luxon';
 
 // Get the current date by local timezone
-const currentDate = DateTime.now()
+const currentDate: string = DateTime.now()
   .setLocale('fi')
   .toLocaleString(DateTime.DATE_FULL);
 
 // Get weeknumber
-const currentWeekNumber = DateTime.local().weekNumber;
+const currentWeekNumber: number = DateTime.local().weekNumber;
 
 // Flag template if it's a flagday
-const flagTemplate = {
+const flagTemplate: object = {
   accessory: {
     type: 'image',
     image_url:
@@ -20,11 +20,12 @@ const flagTemplate = {
 
 // This is the template block for slack message
 const todayTemplate = (
-  currentFlagDay = '',
-  currentChangingFlagDay = '',
-  currentDayEmoji = ''
+  currentFlagDay: any,
+  currentChangingFlagDay: any,
+  currentDayEmoji: any,
 ) => {
-  const template = {
+
+  const template: object = {
     type: 'section',
     text: {
       type: 'mrkdwn',
@@ -41,4 +42,4 @@ const todayTemplate = (
   return template;
 };
 
-module.exports = todayTemplate;
+export default todayTemplate;

@@ -23,7 +23,6 @@ const startSchedulers = () => {
       const currentChangingFlagDay = await getChangingFlagDaysByDate();
       const currentDayEmoji = await getEmojiByDate();
       const slackUsers = await getSlackUsers();
-      console.log("🚀 ~ file: scheduler.ts ~ line 35 ~ slackUsers", slackUsers)
 
       postTodayToSlack(
         currentNames,
