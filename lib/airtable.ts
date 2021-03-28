@@ -1,5 +1,8 @@
 import Airtable  from 'airtable';
 import { DateTime } from 'luxon';
+import { IEmoji } from './interfaces/IEmoji';
+import { IFlagDays } from './interfaces/IFlagDays';
+import { IUsers } from './interfaces/IUsers';
 
 // Get the current date by local timezone
 const currentDate = DateTime.now().setLocale('fi');
@@ -15,7 +18,7 @@ const tableChangingFlagDays = base('Flag days changing');
 const tableEmojis = base('Emoji date');
 const tableUsers = base('Slack Users');
 
-const getFlagDaysByDate = async () => {
+const getFlagDaysByDate = async (): Promise<IFlagDays[]> => {
   try {
     const records = await tableFlagDays
       .select({
@@ -23,14 +26,15 @@ const getFlagDaysByDate = async () => {
         filterByFormula: `AND({Day} = ${dayNumber},  {Month} = ${monthNumber})`,
       })
       .firstPage();
-    return records;
+      // Instead of a Record[] return only fields of type IFlagDays
+    return records.map((record): IFlagDays => record.fields);
   } catch (err) {
     console.log(err);
-    return '';
+    return [];
   }
 };
 
-const getChangingFlagDaysByDate = async () => {
+const getChangingFlagDaysByDate = async (): Promise<IFlagDays[]> => {
   try {
     const records = await tableChangingFlagDays
       .select({
@@ -38,14 +42,16 @@ const getChangingFlagDaysByDate = async () => {
         filterByFormula: `AND({Day} = ${dayNumber},  {Month} = ${monthNumber})`,
       })
       .firstPage();
-    return records;
+
+    // Instead of a Record[] return only fields of type IFlagDays
+    return records.map((record): IFlagDays => record.fields);
   } catch (err) {
     console.log(err);
-    return '';
+    return [];
   }
 };
 
-const getEmojiByDate = async () => {
+const getEmojiByDate = async () : Promise<IEmoji[]> => {
   try {
     const records = await tableEmojis
       .select({
@@ -53,14 +59,17 @@ const getEmojiByDate = async () => {
         filterByFormula: `AND({Day} = ${dayNumber},  {Month} = ${monthNumber}, {Year} = ${yearNumber})`,
       })
       .firstPage();
-    return records;
+
+    // Instead of a Record[] return only fields of type IEmoji
+    return records.map((record): IEmoji => record.fields);
+
   } catch (err) {
     console.log(err);
-    return '';
+    return [];
   }
 };
 
-const getSlackUsers = async () => {
+const getSlackUsers = async (): Promise<IUsers[]> => {
   try {
     const records = await tableUsers
       .select({
@@ -68,10 +77,11 @@ const getSlackUsers = async () => {
       })
       .firstPage();
 
-    return records.map((record): Array<object> => record.fields) ;
+    // Instead of a Record[] return only fields of type IUsers
+    return records.map((record): IUsers => record.fields) ;
   } catch (err) {
     console.log(err);
-    return '';
+    return [];
   }
 };
 

@@ -1,29 +1,27 @@
 const Axios = require('axios');
 
 import todayTemplate  from '../templates/block-today';
-const namedayTemplate = require('../templates/block-nameday');
+import namedayTemplate from '../templates/block-nameday';
 
 const matchingNamesHighlighted = require('./helpers/matchingNamesHighlighted');
 
-import { INames } from './interfaces/INames'
+// Import interfaces
+import { ICurrentNameDays } from './interfaces/ICurrentNameDays';
+import { IEmoji } from './interfaces/IEmoji';
+import { IFlagDays } from './interfaces/IFlagDays';
+import { IUsers } from './interfaces/IUsers';
 
-
-interface IPostToSlack {
-   todaysOfficialNames: Array<INames>
-    todaysOrthodoxNames: Array<INames>
-    todaysSwedishNames: Array<INames>
-}
 
 const postTodayToSlack = (
   {
     todaysOfficialNames,
     todaysOrthodoxNames,
     todaysSwedishNames,
-  }: IPostToSlack,
-    currentFlagDay: any,
-  currentChangingFlagDay: any,
-  currentDayEmoji: any,
-  slackUsers: any
+  }: ICurrentNameDays,
+    currentFlagDay: IFlagDays,
+  currentChangingFlagDay: IFlagDays,
+  currentDayEmoji: IEmoji,
+  slackUsers: IUsers[]
 ): void => {
   const highlightedOfficialNames: string = matchingNamesHighlighted(
     todaysOfficialNames,

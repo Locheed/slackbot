@@ -8,7 +8,7 @@ import {
   getSlackUsers,
 } from './airtable';
 
-import { INames } from './interfaces/INames';
+import { IUsers } from './interfaces/IUsers';
 
 // Posting functionality
 import postTodayToSlack from './postToSlack';
@@ -22,7 +22,7 @@ const startSchedulers = () => {
       const currentFlagDay = await getFlagDaysByDate();
       const currentChangingFlagDay = await getChangingFlagDaysByDate();
       const currentDayEmoji = await getEmojiByDate();
-      const slackUsers = await getSlackUsers();
+      const slackUsers: IUsers[] = await getSlackUsers();
 
       postTodayToSlack(
         currentNames,

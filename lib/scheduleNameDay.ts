@@ -1,7 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
+// Import the interfaces
 import { INames } from './interfaces/INames'
+import { ICurrentNameDays } from './interfaces/ICurrentNameDays'
 
 // Load raw json content
 const rawOfficialNames: string = fs.readFileSync(
@@ -33,8 +35,9 @@ const loopNamesAndFilter = (currentDateNumber: number, currentMonth: number, nam
 /* eslint-enable */
 
 
+
 // Construct the nameday data
-const runNameDayMethod = async (): Promise<any> => {
+const runNameDayMethod = async (): Promise<ICurrentNameDays> => {
   const currentDate = new Date();
   const currentMonth = currentDate.getMonth() + 1;
   const currentDateNumber = currentDate.getDate();
@@ -57,7 +60,8 @@ const runNameDayMethod = async (): Promise<any> => {
     swedishNames
   );
 
-  const currentNameDays = {
+
+  const currentNameDays: ICurrentNameDays = {
     todaysOfficialNames: todaysOfficialNames[0].official_names,
     todaysOrthodoxNames: todaysOrthodoxNames[0].orthodox_names,
     todaysSwedishNames: todaysSwedishNames[0].swedish_names,
