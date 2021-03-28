@@ -1,4 +1,6 @@
 import { DateTime } from 'luxon';
+import { IEmoji } from '../lib/interfaces/IEmoji';
+import { IFlagDays } from '../lib/interfaces/IFlagDays';
 
 // Get the current date by local timezone
 const currentDate: string = DateTime.now()
@@ -7,6 +9,7 @@ const currentDate: string = DateTime.now()
 
 // Get weeknumber
 const currentWeekNumber: number = DateTime.local().weekNumber;
+
 
 // Flag template if it's a flagday
 const flagTemplate: object = {
@@ -20,20 +23,20 @@ const flagTemplate: object = {
 
 // This is the template block for slack message
 const todayTemplate = (
-  currentFlagDay: any,
-  currentChangingFlagDay: any,
-  currentDayEmoji: any,
+  currentFlagDay: IFlagDays,
+  currentChangingFlagDay: IFlagDays,
+  currentDayEmoji: IEmoji,
 ) => {
 
   const template: object = {
     type: 'section',
     text: {
       type: 'mrkdwn',
-      text: `\n\n *Tänään on  ${currentDate} / viikko ${currentWeekNumber}. *\n\n ${
-        currentFlagDay && currentFlagDay.fields.Name
-      }\n\n${
-        currentChangingFlagDay && currentChangingFlagDay.fields.Name
-      }\n\n ${currentDayEmoji && currentDayEmoji.fields.Emoji}`,
+      text: `\n\n *Tänään on  ${currentDate} / viikko ${currentWeekNumber}. * ${
+        currentFlagDay ? '\n\n' + currentFlagDay.Name : ''
+      } ${
+        currentChangingFlagDay ? '\n\n' + currentChangingFlagDay.Name : ''
+      } ${currentDayEmoji ? '\n\n' + currentDayEmoji.Emoji : ''}`,
     },
     // Include the flagday template if it's a flagday
     ...((currentFlagDay || currentChangingFlagDay) && flagTemplate),
