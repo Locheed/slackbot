@@ -26,6 +26,7 @@ const todayTemplate = (
   currentFlagDay: IFlagDays,
   currentChangingFlagDay: IFlagDays,
   currentDayEmoji: IEmoji,
+  birthdays: string
 ) => {
 
   const template: object = {
@@ -36,7 +37,9 @@ const todayTemplate = (
         currentFlagDay ? '\n\n' + currentFlagDay.Name : ''
       } ${
         currentChangingFlagDay ? '\n\n' + currentChangingFlagDay.Name : ''
-      } ${currentDayEmoji ? '\n\n' + currentDayEmoji.Emoji : ''}`,
+        } ${currentDayEmoji ? '\n\n' + currentDayEmoji.Emoji : ''}
+        ${'\n\n' + birthdays}
+        `,
     },
     // Include the flagday template if it's a flagday
     ...((currentFlagDay || currentChangingFlagDay) && flagTemplate),
