@@ -7,24 +7,25 @@ const currentDateNumber = currentDate.getDate();
 
 const matchingBirthdaysHighlighted = (slackUsers: IUsers[]) => {
   // List of usernames from Airtable
-  const matchingBirthdays = slackUsers.map((user: IUsers) => {
-    if (user.birthdayDay === currentDateNumber && user.birthdayMonth === currentMonth) {
+  const matchingBirthdays = slackUsers.filter((user: IUsers) => {
+    if ((user.birthdayDay === currentDateNumber) && (user.birthdayMonth === currentMonth)) {
       return user;
     }
   });
 
-  if (!matchingBirthdays) return '';
+
+  if (matchingBirthdays.length === 0) return undefined;
 
   let highlighted: string[] = [];
-  // Loop all namedays and if there is a match with usernames from Airtable highlight name
-  highlighted = matchingBirthdays.map((user: IUsers, i): string => {
+    // Loop all namedays and if there is a match with usernames from Airtable highlight name
+    highlighted = matchingBirthdays.map((user: IUsers | undefined, i): string => {
 
-      return highlighted[i] = `Paljon onnea, <@${user.slackID}>!\n\n`;
+      return highlighted[i] = `Paljon onnea, <@${user?.slackID}>!\n\n`;
 
-  });
+    });
+    // Commaseparete returned result as string
+    return highlighted.join('');
 
-  // Commaseparete returned result as string
-  return highlighted.join(', ');
 };
 
 module.exports = matchingBirthdaysHighlighted;

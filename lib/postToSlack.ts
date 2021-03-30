@@ -2,6 +2,8 @@ const Axios = require('axios');
 
 import todayTemplate  from '../templates/block-today';
 import namedayTemplate from '../templates/block-nameday';
+import birthdaysTemplate from '../templates/block-birthday';
+
 
 const matchingNamesHighlighted = require('./helpers/matchingNamesHighlighted');
 const matchingBirthdaysHighlighted = require('./helpers/matchingBirthdaysHighlighted');
@@ -37,12 +39,13 @@ const postTodayToSlack = (
     slackUsers
   );
 
-  const birthdays: string = matchingBirthdaysHighlighted(slackUsers);
+  const birthdays: string | undefined = matchingBirthdaysHighlighted(slackUsers);
 
   Axios.post(process.env.WEBHOOK_URL, {
     text: 'Päivän tärkeät tiedot',
     blocks: [
       todayTemplate(currentFlagDay, currentChangingFlagDay, currentDayEmoji, birthdays),
+      ...(birthdays ? birthdaysTemplate(birthdays) : []),
       { type: 'divider' },
       ...namedayTemplate(
         highlightedOfficialNames,
