@@ -3,4 +3,5 @@ export interface IUsers {
   slackID: string,
   birthdayMonth: number,
   birthdayDay: number
+  image: string,
 }

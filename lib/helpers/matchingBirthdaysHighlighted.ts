@@ -13,18 +13,7 @@ const matchingBirthdaysHighlighted = (slackUsers: IUsers[]) => {
     }
   });
 
-
-  if (matchingBirthdays.length === 0) return undefined;
-
-  let highlighted: string[] = [];
-    // Loop all namedays and if there is a match with usernames from Airtable highlight name
-    highlighted = matchingBirthdays.map((user: IUsers | undefined, i): string => {
-
-      return highlighted[i] = `Paljon onnea, <@${user?.slackID}>!\n\n`;
-
-    });
-    // Commaseparete returned result as string
-    return highlighted.join('');
+  return matchingBirthdays;
 
 };
 

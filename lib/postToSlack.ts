@@ -39,12 +39,12 @@ const postTodayToSlack = (
     slackUsers
   );
 
-  const birthdays: string | undefined = matchingBirthdaysHighlighted(slackUsers);
+  const birthdays: IUsers[] | undefined = matchingBirthdaysHighlighted(slackUsers);
 
   Axios.post(process.env.WEBHOOK_URL, {
     text: 'Päivän tärkeät tiedot',
     blocks: [
-      todayTemplate(currentFlagDay, currentChangingFlagDay, currentDayEmoji, birthdays),
+      todayTemplate(currentFlagDay, currentChangingFlagDay, currentDayEmoji),
       ...(birthdays ? birthdaysTemplate(birthdays) : []),
       { type: 'divider' },
       ...namedayTemplate(
