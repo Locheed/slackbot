@@ -10,6 +10,12 @@ const currentDate: string = DateTime.now()
 // Get weeknumber
 const currentWeekNumber: number = DateTime.local().weekNumber;
 
+// Get the ordinal. Day number of the year.
+const currentDayOfTheYear: number = DateTime.local().ordinal;
+
+// Get the days in a year.
+const daysInYear: number = DateTime.local().daysInYear;
+
 
 // Flag template if it's a flagday
 const flagTemplate: object = {
@@ -32,7 +38,7 @@ const todayTemplate = (
     type: 'section',
     text: {
       type: 'mrkdwn',
-      text: `\n\n *Tänään on  ${currentDate} / viikko ${currentWeekNumber}. * ${
+      text: `\n\n *Tänään on  ${currentDate} / viikko ${currentWeekNumber}. (${currentDayOfTheYear}/${daysInYear}) * ${
         currentFlagDay ? '\n\n' + currentFlagDay.Name : ''
       } ${
         currentChangingFlagDay ? '\n\n' + currentChangingFlagDay.Name : ''

@@ -41,12 +41,11 @@ const postTodayToSlack = (
 
   const birthdays: IUsers[] | undefined = matchingBirthdaysHighlighted(slackUsers);
 
-  Axios.post(process.env.WEBHOOK_URL, {
+  const payload = {
     text: 'Päivän tärkeät tiedot',
     blocks: [
       todayTemplate(currentFlagDay, currentChangingFlagDay, currentDayEmoji),
       ...(birthdays ? birthdaysTemplate(birthdays) : []),
-      { type: 'divider' },
       ...namedayTemplate(
         highlightedOfficialNames,
         highlightedOrthodoxNames,
@@ -54,7 +53,15 @@ const postTodayToSlack = (
       ),
       { type: 'divider' },
     ],
-  });
+  };
+
+  Axios.post(process.env.WEBHOOK_URL, payload)
+   .then((response: any) => {
+      console.info(`Message posted successfully: ${response.status}`);
+    })
+    .catch((error: any) => {
+      console.error(`Error posting message to Slack API: ${error.response}`);
+    });
 };
 
 export default postTodayToSlack;

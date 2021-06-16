@@ -4,7 +4,7 @@ const imageTemplate = (user: IUsers) => {
   return {
     accessory: {
       type: 'image',
-      image_url: user.image ? `https://res.cloudinary.com/dcczmztyb/image/fetch/${user.image}` : 'https://res.cloudinary.com/dcczmztyb/image/upload/v1617216470/birthday-cake_qnocyk.png',
+      image_url: user.image ? `https://res.cloudinary.com/${process.env.CLOUDINARY_ID}/image/fetch/${user.image}` : `https://res.cloudinary.com/${process.env.CLOUDINARY_ID}/image/upload/v1617216470/birthday-cake_qnocyk.png`,
       alt_text: 'Paljon onnea',
     },
   }
@@ -18,7 +18,7 @@ const template = (birthdays: IUsers[]) => {
       text: {
         type: 'mrkdwn',
         text: `\n\n *Syntymäpäiväänsä tänään viettää:*
-        Paljon onnea <@${user.slackID}>!`,
+        Paljon onnea <@${user.slackID}>! :cake:`,
       },
       ...imageTemplate(user)
     }
