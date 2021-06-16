@@ -13,6 +13,7 @@ import { ICurrentNameDays } from './interfaces/ICurrentNameDays';
 import { IEmoji } from './interfaces/IEmoji';
 import { IFlagDays } from './interfaces/IFlagDays';
 import { IUsers } from './interfaces/IUsers';
+import { INotification } from './interfaces/INotification';
 
 
 const postTodayToSlack = (
@@ -24,7 +25,8 @@ const postTodayToSlack = (
     currentFlagDay: IFlagDays,
   currentChangingFlagDay: IFlagDays,
   currentDayEmoji: IEmoji,
-  slackUsers: IUsers[]
+  slackUsers: IUsers[],
+  currentDateNotifications: INotification[]
 ): void => {
   const highlightedOfficialNames: string = matchingNamesHighlighted(
     todaysOfficialNames,
@@ -44,7 +46,7 @@ const postTodayToSlack = (
   const payload = {
     text: 'Päivän tärkeät tiedot',
     blocks: [
-      todayTemplate(currentFlagDay, currentChangingFlagDay, currentDayEmoji),
+      todayTemplate(currentFlagDay, currentChangingFlagDay, currentDayEmoji, currentDateNotifications),
       ...(birthdays ? birthdaysTemplate(birthdays) : []),
       ...namedayTemplate(
         highlightedOfficialNames,

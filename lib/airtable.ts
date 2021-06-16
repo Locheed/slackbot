@@ -76,7 +76,7 @@ const getNotificationsByDate = async () : Promise<INotification[]> => {
     const records = await notifications
       .select({
         view: 'Grid view',
-        filterByFormula: `AND({Day} = ${dayNumber},  {Month} = ${monthNumber}, {Year} = ${yearNumber})`,
+        filterByFormula: `IF({Type} = 'By date', AND({Date} = ${currentDate}))`,
       })
       .firstPage();
 

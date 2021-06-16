@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon';
 import { IEmoji } from '../lib/interfaces/IEmoji';
 import { IFlagDays } from '../lib/interfaces/IFlagDays';
+import { INotification } from '../lib/interfaces/INotification';
 
 // Get the current date by local timezone
 const currentDate: string = DateTime.now()
@@ -32,8 +33,9 @@ const todayTemplate = (
   currentFlagDay: IFlagDays,
   currentChangingFlagDay: IFlagDays,
   currentDayEmoji: IEmoji,
+  currentDateNotifications: INotification[],
 ) => {
-
+  console.log(currentDateNotifications);
   const template: object = {
     type: 'section',
     text: {

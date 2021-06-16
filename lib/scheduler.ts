@@ -6,6 +6,7 @@ import {
   getChangingFlagDaysByDate,
   getEmojiByDate,
   getSlackUsers,
+  getNotificationsByDate,
 } from './airtable';
 
 import { IUsers } from './interfaces/IUsers';
@@ -23,13 +24,14 @@ const startSchedulers = () => {
       const currentChangingFlagDay = await getChangingFlagDaysByDate();
       const currentDayEmoji = await getEmojiByDate();
       const slackUsers: IUsers[] = await getSlackUsers();
-
+      const currentDateNotifications = await getNotificationsByDate();
       postTodayToSlack(
         currentNames,
         currentFlagDay[0],
         currentChangingFlagDay[0],
         currentDayEmoji[0],
-        slackUsers
+        slackUsers,
+        currentDateNotifications
       );
     }
   );
